@@ -39,7 +39,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.packageadmin.ExportedPackage;
 import org.osgi.service.packageadmin.PackageAdmin;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -47,17 +46,32 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * Simple bundle declaring a new WebConsole plugin displaying the dependencies
+ * graph as an HTML array.
+ *
+ * @author Anthony Gelibert
+ * @version 1.0.0
+ */
 @Component(name = "PrintGraphHTMLArrayComponent")
 @Provides(specifications = SimpleWebConsolePlugin.class)
 @Instantiate(name = "PrintGraphHTMLArrayInstance")
-public class PrintGraphHTMLArray extends SimpleWebConsolePlugin implements Runnable
+@SuppressWarnings("unused")
+public final class PrintGraphHTMLArray extends SimpleWebConsolePlugin
 {
-    private static final String LABEL = "graph";
-    private static final String TITLE = "OSGi Bundle HTML Graph";
+    private static final long serialVersionUID = 1L;
+
+    /** Webpage label. */
+    private static final String PAGE_LABEL = "graph";
+    /** Webpage title. */
+    private static final String PAGE_TITLE = "OSGi Bundle HTML Graph";
+    /** Webpage css. */
+    private static final String[] PAGE_CSS = new String[0];
 
     /** Framework Bundle Context. */
-    private BundleContext m_bundleContext;
+    private final BundleContext m_bundleContext;
 
+    /** PackageAdmin permits to obtain the current mapping. */
     @Requires
     private PackageAdmin m_packageAdmin;
 
@@ -68,7 +82,7 @@ public class PrintGraphHTMLArray extends SimpleWebConsolePlugin implements Runna
      */
     public PrintGraphHTMLArray(final BundleContext bundleContext)
     {
-        super(LABEL, TITLE, new String[0]);
+        super(PAGE_LABEL, PAGE_TITLE, PAGE_CSS);
         m_bundleContext = bundleContext;
     }
 
@@ -77,12 +91,9 @@ public class PrintGraphHTMLArray extends SimpleWebConsolePlugin implements Runna
     public void start()
     {
         register(m_bundleContext);
-        run();
     }
 
-    /*
-     * "Stop"
-     */
+    /** "Stop" */
     @Invalidate
     public void stop()
     {
@@ -90,13 +101,7 @@ public class PrintGraphHTMLArray extends SimpleWebConsolePlugin implements Runna
     }
 
     @Override
-    public void run()
-    {
-
-    }
-
-    @Override
-    protected void renderContent(final HttpServletRequest req, final HttpServletResponse res) throws ServletException, IOException
+    protected void renderContent(final HttpServletRequest req, final HttpServletResponse res) throws IOException
     {
         final Set<Bundle> bundleSet = new TreeSet<Bundle>();
         final StringBuilder sb = new StringBuilder(1024);
@@ -115,14 +120,11 @@ public class PrintGraphHTMLArray extends SimpleWebConsolePlugin implements Runna
                 if (importers.length > 0)
                 {
                     sb.append("<tr><td align=\"center\" valign=\"middle\" rowspan=");
-                    sb.append(importers.length);
-                    sb.append("><a href=\"bundles/");
-                    sb.append(bundle.getBundleId());
-                    sb.append("\">");
+                    sb.append(importers.length).append("><a href=\"bundles/");
+                    sb.append(bundle.getBundleId()).append("\">");
                     sb.append(bundle.getSymbolicName());
                     sb.append("</a></td><td valign=\"middle\" align=\"center\"><a href=\"bundles/");
-                    sb.append(importers[0].getBundleId());
-                    sb.append("\">");
+                    sb.append(importers[0].getBundleId()).append("\">");
                     sb.append(importers[0].getSymbolicName());
                     sb.append("</a></td></tr>");
                     for (int i = 1; i < importers.length; i++)
@@ -139,6 +141,17 @@ public class PrintGraphHTMLArray extends SimpleWebConsolePlugin implements Runna
         }
         sb.append("</table border></center>");
         res.getWriter().print(sb.toString());
+    }
+
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder(64);
+        sb.append("PrintGraphHTMLArray");
+        sb.append("{m_bundleContext=").append(m_bundleContext);
+        sb.append(", m_packageAdmin=").append(m_packageAdmin);
+        sb.append('}');
+        return sb.toString();
     }
 }
 
