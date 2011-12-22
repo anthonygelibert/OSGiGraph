@@ -5,10 +5,10 @@
     http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.ag</groupId>
-    <artifactId>osgi.tools.graph.htmlarray</artifactId>
-    <packaging>bundle</packaging>
+    <artifactId>osgi.tools.graph</artifactId>
+    <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Anthony Gelibert :: OSGi :: Tools :: Dependencies Graph :: HTML Array</name>
+    <name>Anthony Gelibert :: OSGi :: Tools :: Dependencies Graph</name>
     <inceptionYear>2011</inceptionYear>
 
     <properties>
@@ -26,43 +26,6 @@
             <url>http://anthony-gelibert.fr</url>
         </developer>
     </developers>
-
-    <dependencies>
-        <dependency> <!-- iPOJO Annotations -->
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.ipojo.annotations</artifactId>
-            <version>1.8.0</version>
-            <scope>provided</scope>
-            <type>bundle</type>
-        </dependency>
-        <dependency> <!-- Felix WebConsole -->
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.webconsole</artifactId>
-            <version>3.1.8</version>
-            <scope>provided</scope>
-            <type>bundle</type>
-        </dependency>
-        <dependency> <!-- OSGi Core -->
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-            <version>4.3.0</version>
-            <scope>provided</scope>
-            <type>bundle</type>
-        </dependency>
-        <dependency> <!-- OSGi Service -->
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.compendium</artifactId>
-            <version>4.2.0</version>
-            <scope>provided</scope>
-            <type>bundle</type>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
@@ -85,31 +48,10 @@
                     <failOnError>true</failOnError>
                 </configuration>
             </plugin>
-            <!-- OSGi bundle -->
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <version>2.3.4</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
-                    </instructions>
-                </configuration>
-            </plugin>
-            <!-- iPOJO -->
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-ipojo-plugin</artifactId>
-                <version>1.8.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>ipojo-bundle</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
+
+    <modules>
+        <module>htmlarray</module>
+    </modules>
 </project>
