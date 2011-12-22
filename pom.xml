@@ -5,10 +5,10 @@
     http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.ag</groupId>
-    <artifactId>osgi.tools.graph</artifactId>
+    <artifactId>osgi.tools.graph.htmlarray</artifactId>
     <packaging>bundle</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Anthony Gelibert :: OSGi :: Tools :: Graph</name>
+    <name>Anthony Gelibert :: OSGi :: Tools :: Dependencies Graph :: HTML Array</name>
     <inceptionYear>2011</inceptionYear>
 
     <properties>

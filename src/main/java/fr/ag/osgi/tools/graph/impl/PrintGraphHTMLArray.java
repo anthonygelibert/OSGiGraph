@@ -47,13 +47,13 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
-@Component(name = "PrintGraphComponent")
+@Component(name = "PrintGraphHTMLArrayComponent")
 @Provides(specifications = SimpleWebConsolePlugin.class)
-@Instantiate(name = "PrintGraphInstance")
-public class PrintGraph extends SimpleWebConsolePlugin implements Runnable
+@Instantiate(name = "PrintGraphHTMLArrayInstance")
+public class PrintGraphHTMLArray extends SimpleWebConsolePlugin implements Runnable
 {
     private static final String LABEL = "graph";
-    private static final String TITLE = "OSGi Bundle Graph";
+    private static final String TITLE = "OSGi Bundle HTML Graph";
 
     /** Framework Bundle Context. */
     private BundleContext m_bundleContext;
@@ -66,7 +66,7 @@ public class PrintGraph extends SimpleWebConsolePlugin implements Runnable
      *
      * @param bundleContext Framework Bundle Context.
      */
-    public PrintGraph(final BundleContext bundleContext)
+    public PrintGraphHTMLArray(final BundleContext bundleContext)
     {
         super(LABEL, TITLE, new String[0]);
         m_bundleContext = bundleContext;
